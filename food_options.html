@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 800px;">
+    <div class="card-header bg-primary text-white">
+        <h2>Food Preferences</h2>
+    </div>
+    <div class="card-body">
+        <div class="trip-summary mb-4">
+            <p><strong>Current Selections:</strong></p>
+            <p>Stay: {{ stay_type|title }} | Transport: {{ transport_mode|title }}</p>
+        </div>
+        
+        <form action="/food_options" method="POST">
+            {% for field in ['trip_type', 'start_place', 'destination', 'travel_dates', 'transport_mode', 'stay_type'] %}
+            <input type="hidden" name="{{ field }}" value="{{ request.form[field] }}">
+            {% endfor %}
+            
+            <h4 class="mb-3">What type of food would you like?</h4>
+            <div class="d-grid gap-2">
+                <button name="food_type" value="indian" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-egg-fried"></i> Indian Cuisine
+                </button>
+                <button name="food_type" value="chinese" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-noodles"></i> Chinese Cuisine
+                </button>
+                <button name="food_type" value="local" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-geo-alt"></i> Local Specialties
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

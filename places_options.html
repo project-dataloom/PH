@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 800px;">
+    <div class="card-header bg-primary text-white">
+        <h2>Places to Visit</h2>
+    </div>
+    <div class="card-body">
+        <div class="trip-summary mb-4">
+            <p><strong>Your trip details:</strong></p>
+            <p>{{ start_place }} → {{ destination }} ({{ travel_dates }})</p>
+            <p>Stay: {{ stay_type|title }} | Food: {{ food_type|title }}</p>
+        </div>
+        
+        <form action="/places_options" method="POST">
+            {% for field in ['trip_type', 'start_place', 'destination', 'travel_dates', 'transport_mode', 'stay_type', 'food_type'] %}
+            <input type="hidden" name="{{ field }}" value="{{ request.form[field] }}">
+            {% endfor %}
+            
+            <h4 class="mb-3">What type of places interest you?</h4>
+            <div class="d-grid gap-2">
+                <button name="place_type" value="beaches" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-umbrella"></i> Beaches
+                </button>
+                <button name="place_type" value="pilgrims" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-building-columns"></i> Religious Sites
+                </button>
+                <button name="place_type" value="local" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-pin-map"></i> Local Attractions
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 800px;">
+    <div class="card-header bg-primary text-white">
+        <h2>Packing List for {{ destination }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="trip-details mb-4">
+            <p><strong>From:</strong> {{ start_place }} <strong>To:</strong> {{ destination }}</p>
+            <p><strong>Dates:</strong> {{ travel_dates }}</p>
+        </div>
+        
+        <div class="alert alert-info">
+            <h4><i class="bi bi-suitcase"></i> Recommended Packing List</h4>
+            <div class="packing-items">
+                {% for item in packing_list.split('|') %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="item{{ loop.index }}">
+                    <label class="form-check-label" for="item{{ loop.index }}">{{ item.strip() }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form action="/transport_options" method="POST">
+            {% for field in ['trip_type', 'start_place', 'destination', 'travel_dates'] %}
+            <input type="hidden" name="{{ field }}" value="{{ request.form[field] }}">
+            {% endfor %}
+            
+            <h4 class="mt-4 mb-3"><i class="bi bi-bus-front"></i> Select Transport Mode</h4>
+            <div class="d-grid gap-2">
+                <button name="transport_mode" value="bus" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-bus-front"></i> Bus
+                </button>
+                <button name="transport_mode" value="train" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-train-front"></i> Train
+                </button>
+                <button name="transport_mode" value="flight" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-airplane"></i> Flight
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

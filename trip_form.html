@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-primary text-white">
+        <h2>Trip Details</h2>
+    </div>
+    <div class="card-body">
+        <form action="/smart_packaging" method="POST">
+            <input type="hidden" name="trip_type" value="{{ trip_type }}">
+            
+            <div class="mb-3">
+                <label for="start_place" class="form-label">Starting Place</label>
+                <input type="text" class="form-control" id="start_place" name="start_place" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="destination" class="form-label">Destination</label>
+                <select class="form-select" id="destination" name="destination" required>
+                    <option value="" selected disabled>Select destination</option>
+                    {% for destination in ['Goa', 'Manali', 'Mumbai', 'Delhi', 'Bangalore'] %}
+                    <option value="{{ destination }}">{{ destination }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="travel_dates" class="form-label">Travel Dates</label>
+                <input type="text" class="form-control" id="travel_dates" name="travel_dates" 
+                       placeholder="DD/MM/YYYY - DD/MM/YYYY" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                Continue to Packing List
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

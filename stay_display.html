@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 800px;">
+    <div class="card-header bg-primary text-white">
+        <h2>{{ stay_type|title }} Stay Options in {{ destination }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success">
+            <h4>Recommended {{ stay_type }} stays:</h4>
+            <ul class="list-group mt-3">
+                {% for option in options %}
+                <li class="list-group-item">{{ option }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <form action="/food_options" method="POST">
+            {% for field in ['trip_type', 'start_place', 'destination', 'travel_dates', 'transport_mode', 'stay_type'] %}
+            <input type="hidden" name="{{ field }}" value="{{ request.form[field] }}">
+            {% endfor %}
+            
+            <h4 class="mt-4 mb-3">Select Food Preference</h4>
+            <div class="d-grid gap-2">
+                <button name="food_type" value="indian" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-egg-fried"></i> Indian
+                </button>
+                <button name="food_type" value="chinese" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-noodles"></i> Chinese
+                </button>
+                <button name="food_type" value="local" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-geo-alt"></i> Local Specialties
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
